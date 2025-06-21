@@ -1,0 +1,205 @@
+// Button.module.scss
+
+// 1. SCSS 变量定义 - CSS 预处理器知识
+$border-radius: 8px;
+$transition-duration: 0.2s;
+$transition-timing: ease-in-out;
+
+// 2. Mixin 定义 - SCSS 进阶应用
+@mixin button-focus {
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+  }
+}
+
+@mixin button-disabled {
+  &.disabled,
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+// 3. 基础按钮样式 - CSS 基础知识
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  border: 1px solid transparent;
+  border-radius: $border-radius;
+  cursor: pointer;
+
+  font-family: inherit;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+
+  transition: all $transition-duration $transition-timing;
+
+  @include button-focus;
+  @include button-disabled;
+
+  // 4. 伪类状态 - CSS 交互知识
+  &:hover:not(:disabled):not(.disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  &:active:not(:disabled):not(.disabled) {
+    transform: translateY(0);
+  }
+}
+
+// 5. 尺寸变体 - 组件变体设计
+.sm {
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.md {
+  padding: 8px 16px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.lg {
+  padding: 12px 24px;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+// 6. 颜色变体 - 设计系统实现
+.primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: #667eea;
+
+  &:hover:not(:disabled):not(.disabled) {
+    background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+    border-color: #5a6fd8;
+  }
+}
+
+.secondary {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  border-color: #f093fb;
+
+  &:hover:not(:disabled):not(.disabled) {
+    background: linear-gradient(135deg, #ee82e9 0%, #f3455a 100%);
+    border-color: #ee82e9;
+  }
+}
+
+.outline {
+  background: transparent;
+  color: #667eea;
+  border-color: #667eea;
+
+  &:hover:not(:disabled):not(.disabled) {
+    background: #667eea;
+    color: white;
+  }
+}
+
+.ghost {
+  background: transparent;
+  color: #64748b;
+  border-color: transparent;
+
+  &:hover:not(:disabled):not(.disabled) {
+    background: #f1f5f9;
+    color: #334155;
+  }
+}
+
+.danger {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+  color: white;
+  border-color: #ff6b6b;
+
+  &:hover:not(:disabled):not(.disabled) {
+    background: linear-gradient(135deg, #ff5252 0%, #e53e3e 100%);
+    border-color: #ff5252;
+  }
+}
+
+// 7. 特殊状态样式
+.loading {
+  position: relative;
+  color: transparent !important;
+
+  .spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 16px;
+    height: 16px;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+  }
+}
+
+.block {
+  width: 100%;
+}
+
+// 8. 图标样式
+.icon {
+  display: flex;
+  align-items: center;
+
+  svg {
+    width: 1em;
+    height: 1em;
+  }
+}
+
+// 9. 动画定义 - CSS 动画知识
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// 10. 主题适配 - 主题系统设计
+.dark {
+  &.ghost {
+    color: #94a3b8;
+
+    &:hover:not(:disabled):not(.disabled) {
+      background: #1e293b;
+      color: #f1f5f9;
+    }
+  }
+
+  &.outline {
+    color: #94a3b8;
+    border-color: #475569;
+
+    &:hover:not(:disabled):not(.disabled) {
+      background: #475569;
+      color: white;
+    }
+  }
+}
+
+// 11. 响应式设计 - 移动端适配
+@media (max-width: 768px) {
+  .button {
+    min-height: 44px; // 移动端最小触摸目标
+  }
+
+  .sm {
+    padding: 8px 16px;
+    font-size: 16px; // 移动端最小字体
+  }
+}

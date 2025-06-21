@@ -8,6 +8,7 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -15,10 +16,19 @@
     "declaration": true,
     "outDir": "./dist",
     "jsx": "react-jsx",
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["*"],
+      "@/components/*": ["components/*"],
+      "@/styles/*": ["styles/*"],
+      "*.scss": ["../types/scss.d.ts"],
+      "*.module.scss": ["../types/scss.d.ts"]
+    },
+    "typeRoots": ["node_modules/@types", "types"]
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "types/**/*"
   ],
   "exclude": [
     "node_modules",

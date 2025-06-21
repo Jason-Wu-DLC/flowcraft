@@ -1,0 +1,180 @@
+// packages/shared/src/components/Modal/Modal.module.scss
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+
+  &--centered {
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+
+  &:not(&--centered) {
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 10vh;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+.modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--fc-color-background-primary);
+  border-radius: var(--fc-border-radius-lg);
+  box-shadow: var(--fc-shadow-xl);
+  max-height: 90vh;
+  overflow: hidden;
+
+  // 尺寸变体
+  &--sm {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  &--md {
+    width: 100%;
+    max-width: 500px;
+  }
+
+  &--lg {
+    width: 100%;
+    max-width: 800px;
+  }
+
+  &--xl {
+    width: 100%;
+    max-width: 1200px;
+  }
+
+  &--full {
+    width: 100vw;
+    height: 100vh;
+    max-width: none;
+    max-height: none;
+    border-radius: 0;
+  }
+
+  @media (max-width: 768px) {
+    &--sm,
+    &--md,
+    &--lg,
+    &--xl {
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      border-radius: 12px 12px 0 0;
+      position: fixed;
+      bottom: 0;
+      top: auto;
+      max-height: 90vh;
+    }
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--fc-color-border-light);
+  background-color: var(--fc-color-background-primary);
+  border-radius: var(--fc-border-radius-lg) var(--fc-border-radius-lg) 0 0;
+  flex-shrink: 0;
+}
+
+.title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fc-color-text-primary);
+  line-height: 1.4;
+}
+
+.closeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: none;
+  color: var(--fc-color-text-secondary);
+  cursor: pointer;
+  border-radius: var(--fc-border-radius-md);
+  transition: all 0.2s ease-in-out;
+  flex-shrink: 0;
+  margin-left: 16px;
+
+  &:hover {
+    background-color: var(--fc-color-gray-100);
+    color: var(--fc-color-text-primary);
+  }
+
+  &:active {
+    background-color: var(--fc-color-gray-200);
+  }
+
+  &:focus {
+    outline: 2px solid var(--fc-color-primary-500);
+    outline-offset: 2px;
+  }
+}
+
+.body {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  color: var(--fc-color-text-primary);
+  line-height: 1.6;
+
+  // 自定义滚动条
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--fc-color-gray-50);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--fc-color-gray-300);
+    border-radius: 3px;
+
+    &:hover {
+      background: var(--fc-color-gray-400);
+    }
+  }
+}
+
+.footer {
+  flex-shrink: 0;
+  padding: 16px 24px 20px;
+  border-top: 1px solid var(--fc-color-border-light);
+  background-color: var(--fc-color-background-secondary);
+  border-radius: 0 0 var(--fc-border-radius-lg) var(--fc-border-radius-lg);
+}
+
+.footerActions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+
+  @media (max-width: 480px) {
+    flex-direction: column-reverse;
+
+    button {
+      width: 100%;
+    }
+  }
+}

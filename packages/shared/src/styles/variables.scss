@@ -1,0 +1,163 @@
+// packages/shared/src/styles/variables.scss
+// CSS 自定义属性 (CSS Variables)
+:root {
+  // 颜色系统
+  // 主色系
+  --fc-color-primary-50: #eff6ff;
+  --fc-color-primary-100: #dbeafe;
+  --fc-color-primary-200: #bfdbfe;
+  --fc-color-primary-300: #93c5fd;
+  --fc-color-primary-400: #60a5fa;
+  --fc-color-primary-500: #3b82f6;
+  --fc-color-primary-600: #2563eb;
+  --fc-color-primary-700: #1d4ed8;
+  --fc-color-primary-800: #1e40af;
+  --fc-color-primary-900: #1e3a8a;
+
+  // 辅助色系
+  --fc-color-secondary-50: #f8fafc;
+  --fc-color-secondary-100: #f1f5f9;
+  --fc-color-secondary-200: #e2e8f0;
+  --fc-color-secondary-300: #cbd5e1;
+  --fc-color-secondary-400: #94a3b8;
+  --fc-color-secondary-500: #64748b;
+  --fc-color-secondary-600: #475569;
+  --fc-color-secondary-700: #334155;
+  --fc-color-secondary-800: #1e293b;
+  --fc-color-secondary-900: #0f172a;
+
+  // 中性色
+  --fc-color-gray-50: #f9fafb;
+  --fc-color-gray-100: #f3f4f6;
+  --fc-color-gray-200: #e5e7eb;
+  --fc-color-gray-300: #d1d5db;
+  --fc-color-gray-400: #9ca3af;
+  --fc-color-gray-500: #6b7280;
+  --fc-color-gray-600: #4b5563;
+  --fc-color-gray-700: #374151;
+  --fc-color-gray-800: #1f2937;
+  --fc-color-gray-900: #111827;
+
+  // 语义化颜色
+  --fc-color-success: #059669;
+  --fc-color-warning: #d97706;
+  --fc-color-error: #dc2626;
+  --fc-color-info: #0891b2;
+
+  // 背景色
+  --fc-color-background-primary: #ffffff;
+  --fc-color-background-secondary: #f9fafb;
+  --fc-color-background-elevated: #ffffff;
+
+  // 文本色
+  --fc-color-text-primary: #111827;
+  --fc-color-text-secondary: #6b7280;
+  --fc-color-text-disabled: #9ca3af;
+  --fc-color-text-inverse: #ffffff;
+
+  // 边框色
+  --fc-color-border-light: #f3f4f6;
+  --fc-color-border-medium: #e5e7eb;
+  --fc-color-border-heavy: #d1d5db;
+
+  // 间距系统
+  --fc-spacing-xs: 4px;
+  --fc-spacing-sm: 8px;
+  --fc-spacing-md: 16px;
+  --fc-spacing-lg: 24px;
+  --fc-spacing-xl: 32px;
+  --fc-spacing-xxl: 48px;
+  --fc-spacing-xxxl: 64px;
+
+  // 字体系统
+  --fc-font-family-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --fc-font-family-mono: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  --fc-font-size-xs: 12px;
+  --fc-font-size-sm: 14px;
+  --fc-font-size-base: 16px;
+  --fc-font-size-lg: 18px;
+  --fc-font-size-xl: 20px;
+  --fc-font-size-2xl: 24px;
+  --fc-font-size-3xl: 30px;
+  --fc-font-size-4xl: 36px;
+
+  --fc-font-weight-light: 300;
+  --fc-font-weight-normal: 400;
+  --fc-font-weight-medium: 500;
+  --fc-font-weight-semibold: 600;
+  --fc-font-weight-bold: 700;
+
+  --fc-line-height-tight: 1.25;
+  --fc-line-height-normal: 1.5;
+  --fc-line-height-relaxed: 1.75;
+
+  // 边框圆角
+  --fc-border-radius-none: 0;
+  --fc-border-radius-sm: 2px;
+  --fc-border-radius-base: 4px;
+  --fc-border-radius-md: 6px;
+  --fc-border-radius-lg: 8px;
+  --fc-border-radius-xl: 12px;
+  --fc-border-radius-full: 9999px;
+
+  // 阴影系统
+  --fc-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --fc-shadow-base: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --fc-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --fc-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --fc-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --fc-shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+
+  // Z-index 系统
+  --fc-z-index-dropdown: 1000;
+  --fc-z-index-modal: 1050;
+  --fc-z-index-popover: 1060;
+  --fc-z-index-tooltip: 1070;
+  --fc-z-index-toast: 1080;
+
+  // 断点系统
+  --fc-breakpoint-sm: 640px;
+  --fc-breakpoint-md: 768px;
+  --fc-breakpoint-lg: 1024px;
+  --fc-breakpoint-xl: 1280px;
+  --fc-breakpoint-2xl: 1536px;
+
+  // 过渡动画
+  --fc-transition-fast: 0.1s ease-in-out;
+  --fc-transition-base: 0.2s ease-in-out;
+  --fc-transition-slow: 0.3s ease-in-out;
+
+  // 组件特定变量
+  --fc-button-border-width: 1px;
+  --fc-input-border-width: 1px;
+  --fc-focus-ring-width: 3px;
+  --fc-focus-ring-opacity: 0.1;
+}
+
+// 暗色主题
+[data-theme="dark"] {
+  // 背景色
+  --fc-color-background-primary: #0f172a;
+  --fc-color-background-secondary: #1e293b;
+  --fc-color-background-elevated: #334155;
+
+  // 文本色
+  --fc-color-text-primary: #f1f5f9;
+  --fc-color-text-secondary: #94a3b8;
+  --fc-color-text-disabled: #64748b;
+  --fc-color-text-inverse: #0f172a;
+
+  // 边框色
+  --fc-color-border-light: #334155;
+  --fc-color-border-medium: #475569;
+  --fc-color-border-heavy: #64748b;
+
+  // 中性色调整
+  --fc-color-gray-50: #1e293b;
+  --fc-color-gray-100: #334155;
+  --fc-color-gray-200: #475569;
+  --fc-color-gray-300: #64748b;
+  --fc-color-gray-800: #e2e8f0;
+  --fc-color-gray-900: #f1f5f9;
+}
