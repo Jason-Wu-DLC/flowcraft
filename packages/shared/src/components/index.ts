@@ -1,3 +1,6 @@
+// packages/shared/src/components/index.ts
+// 只导出组件，避免循环依赖
+
 export { default as Button } from './Button';
 export type { ButtonProps, ButtonVariant, ButtonSize } from './Button';
 
@@ -27,12 +30,3 @@ export type {
   GridProps,
   GridItemProps,
 } from './Layout';
-
-// Hooks 导出
-export { useModal } from '../hooks/useModal';
-export type { UseModalReturn } from '../hooks/useModal';
-
-// 主题导出
-export { ThemeProvider, useTheme } from '../themes/context';
-export { defaultTheme } from '../themes/default';
-export type { Theme, ThemeColors, ThemeSpacing, ThemeTypography } from '../themes/types';

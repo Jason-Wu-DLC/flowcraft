@@ -1,0 +1,134 @@
+// packages/shell/src/components/Navigation.module.scss
+
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 64px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+}
+
+.brandLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: inherit;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.brandText {
+  font-size: 20px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #6b7280;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    color: #3b82f6;
+    background-color: #eff6ff;
+    text-decoration: none;
+  }
+
+  &.active {
+    color: #3b82f6;
+    background-color: #eff6ff;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  @media (max-width: 640px) {
+    gap: 4px;
+
+    button span {
+      display: none;
+    }
+  }
+}
+
+.actionButton,
+.primaryButton,
+.secondaryButton {
+  background: none;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  color: #6b7280;
+
+  &:hover {
+    background-color: #f3f4f6;
+    color: #111827;
+  }
+}
+
+.primaryButton {
+  background-color: #3b82f6;
+  color: white;
+  border: 1px solid #3b82f6;
+
+  &:hover {
+    background-color: #2563eb;
+    border-color: #2563eb;
+    color: white;
+  }
+}
+
+.secondaryButton {
+  border: 1px solid #e5e7eb;
+
+  &:hover {
+    border-color: #d1d5db;
+  }
+}

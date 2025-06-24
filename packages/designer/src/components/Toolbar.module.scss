@@ -1,0 +1,31 @@
+// packages/designer/src/components/Toolbar.module.scss
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--fc-spacing-sm);
+  background-color: var(--fc-color-background-elevated);
+  border-radius: var(--fc-border-radius-lg);
+  padding: var(--fc-spacing-xs);
+  box-shadow: var(--fc-shadow-sm);
+}
+
+.toolGroup {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.toolSeparator {
+  width: 1px;
+  height: 24px;
+  background-color: var(--fc-color-border-medium);
+  margin: 0 var(--fc-spacing-xs);
+}
+
+.zoomLevel {
+  min-width: 48px;
+  text-align: center;
+  font-size: var(--fc-font-size-sm);
+  font-weight: var(--fc-font-weight-medium);
+  color: var(--fc-color-text-secondary);
+}

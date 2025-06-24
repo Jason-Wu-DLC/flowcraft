@@ -1,0 +1,104 @@
+// packages/designer/src/components/PropertyPanel.module.scss
+.propertyPanel {
+  padding: var(--fc-spacing-md);
+  height: 100%;
+  overflow-y: auto;
+  background-color: var(--fc-color-background-primary);
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--fc-spacing-lg);
+  padding-bottom: var(--fc-spacing-sm);
+  border-bottom: 1px solid var(--fc-color-border-light);
+}
+
+.panelTitle {
+  margin: 0;
+  font-size: var(--fc-font-size-lg);
+  font-weight: var(--fc-font-weight-semibold);
+  color: var(--fc-color-text-primary);
+}
+
+.panelActions {
+  display: flex;
+  gap: var(--fc-spacing-xs);
+}
+
+.panelContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fc-spacing-lg);
+}
+
+.section {
+  // Section styles
+}
+
+.sectionTitle {
+  margin: 0 0 var(--fc-spacing-md);
+  font-size: var(--fc-font-size-sm);
+  font-weight: var(--fc-font-weight-medium);
+  color: var(--fc-color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.propertyGroup {
+  margin-bottom: var(--fc-spacing-md);
+}
+
+.propertyGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--fc-spacing-sm);
+}
+
+.propertyLabel {
+  display: block;
+  margin-bottom: var(--fc-spacing-xs);
+  font-size: var(--fc-font-size-sm);
+  font-weight: var(--fc-font-weight-medium);
+  color: var(--fc-color-text-primary);
+}
+
+.propertyValue {
+  padding: var(--fc-spacing-xs);
+  background-color: var(--fc-color-gray-50);
+  border-radius: var(--fc-border-radius-sm);
+  font-size: var(--fc-font-size-sm);
+  color: var(--fc-color-text-secondary);
+  font-family: var(--fc-font-family-mono);
+}
+
+.propertySelect {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--fc-color-border-medium);
+  border-radius: var(--fc-border-radius-sm);
+  font-size: var(--fc-font-size-sm);
+  background-color: var(--fc-color-background-primary);
+  color: var(--fc-color-text-primary);
+
+  &:focus {
+    outline: none;
+    border-color: var(--fc-color-primary-500);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+}
+
+.emptyState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  text-align: center;
+  color: var(--fc-color-text-secondary);
+
+  p {
+    margin: 0;
+    font-size: var(--fc-font-size-base);
+  }
+}

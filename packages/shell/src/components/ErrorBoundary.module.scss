@@ -1,0 +1,63 @@
+// packages/shell/src/components/ErrorBoundary.module.scss
+.errorBoundary {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--fc-color-background-secondary);
+}
+
+.errorContent {
+  text-align: center;
+  padding: var(--fc-spacing-xxl);
+}
+
+.errorIcon {
+  color: var(--fc-color-warning);
+  margin-bottom: var(--fc-spacing-lg);
+}
+
+.errorTitle {
+  font-size: var(--fc-font-size-3xl);
+  font-weight: var(--fc-font-weight-bold);
+  color: var(--fc-color-text-primary);
+  margin-bottom: var(--fc-spacing-md);
+}
+
+.errorMessage {
+  font-size: var(--fc-font-size-lg);
+  color: var(--fc-color-text-secondary);
+  margin-bottom: var(--fc-spacing-xl);
+  line-height: var(--fc-line-height-relaxed);
+}
+
+.errorDetails {
+  text-align: left;
+  margin: var(--fc-spacing-lg) 0;
+  padding: var(--fc-spacing-md);
+  background-color: var(--fc-color-gray-50);
+  border-radius: var(--fc-border-radius-md);
+  border: 1px solid var(--fc-color-border-medium);
+
+  summary {
+    cursor: pointer;
+    font-weight: var(--fc-font-weight-medium);
+    margin-bottom: var(--fc-spacing-sm);
+    color: var(--fc-color-text-primary);
+  }
+}
+
+.errorStack {
+  font-family: var(--fc-font-family-mono);
+  font-size: var(--fc-font-size-xs);
+  color: var(--fc-color-error);
+  white-space: pre-wrap;
+  overflow-x: auto;
+  margin: 0;
+}
+
+.errorActions {
+  display: flex;
+  gap: var(--fc-spacing-md);
+  justify-content: center;
+}

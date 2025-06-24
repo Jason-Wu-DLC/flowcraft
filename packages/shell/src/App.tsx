@@ -1,29 +1,46 @@
-import React from 'react';
-import './App.css';
+// packages/shell/src/App.tsx
+import React, { Suspense, lazy } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AppProvider } from './contexts/AppContext';
+import ErrorBoundary from './components/ErrorBoundary';
+import LoadingSpinner from './components/LoadingSpinner';
+import Navigation from './components/Navigation';
+import { ThemeProvider } from './themes/context';
+import './App.scss';
 
-// 临时的 Button 组件
-const Button: React.FC<{
-  children: React.ReactNode;
-  onClick?: () => void;
-}> = ({ children, onClick }) => {
-  return (
-    <button className="flowcraft-button" onClick={onClick}>
-      {children}
-    </button>
-  );
-};
+// 懒加载页面
+const DesignerPage = lazy(() => import('./pages/DesignerPage'));
+const PreviewPage = lazy(() => import('./pages/PreviewPage'));
+const CollaborationPage = lazy(() => import('./pages/CollaborationPage'));
+const HomePage = lazy(() => import('./pages/HomePage'));
 
 const App: React.FC = () => {
   return (
-    <div className="app">
-      <header className="app-header">
-        <h1>🚀 FlowCraft</h1>
-        <p>智能业务流程构建平台</p>
-        <Button onClick={() => alert('欢迎使用 FlowCraft!')}>
-          开始使用
-        </Button>
-      </header>
-    </div>
+    <ThemeProvider>
+      <AppProvider>
+        <Router>
+          <div className="app">
+            <header className="app-header">
+              <Navigation />
+            </header>
+
+            <main className="app-main">
+              <ErrorBoundary>
+                <Suspense fallback={<LoadingSpinner />}>
+                  <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/designer/*" element={<DesignerPage />} />
+                    <Route path="/preview/*" element={<PreviewPage />} />
+                    <Route path="/collaboration/*" element={<CollaborationPage />} />
+                    <Route path="*" element={<Navigate to="/" replace />} />
+                  </Routes>
+                </Suspense>
+              </ErrorBoundary>
+            </main>
+          </div>
+        </Router>
+      </AppProvider>
+    </ThemeProvider>
   );
 };
 

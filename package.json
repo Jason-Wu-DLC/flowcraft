@@ -1,66 +1,64 @@
 {
   "name": "flowcraft",
   "version": "1.0.0",
-  "description": "FlowCraft智能业务流程构建平台",
+  "description": "FlowCraft 智能业务流程构建平台",
   "private": true,
   "workspaces": [
     "packages/*",
-    "apps/*",
-    "tools/*"
+    "apps/*"
   ],
   "scripts": {
-    "dev": "npm run dev --workspace=packages/shell",
+    "dev:all": "node tools/dev-scripts/start-all.js",
+    "dev:shell": "npm run dev --workspace=packages/shell",
     "dev:shared": "npm run dev --workspace=packages/shared",
+    "dev:designer": "npm run dev --workspace=packages/designer",
     "dev:storybook": "npm run storybook --workspace=packages/shared",
-    "build": "npm run build:all",
-    "build:all": "npm run build --workspaces --if-present",
+    "build:all": "npm run build --workspace=packages/shared && npm run build --workspace=packages/designer && npm run build --workspace=packages/shell",
     "build:shared": "npm run build --workspace=packages/shared",
-    "test": "npm run test --workspaces --if-present",
+    "build:designer": "npm run build --workspace=packages/designer",
+    "build:shell": "npm run build --workspace=packages/shell",
+    "clean:all": "npm run clean --workspace=packages/shell && npm run clean --workspace=packages/shared && npm run clean --workspace=packages/designer",
+    "test": "lerna run test",
     "test:shared": "npm run test --workspace=packages/shared",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx --ignore-path .gitignore",
-    "lint:fix": "npm run lint -- --fix",
-    "type-check": "npm run type-check --workspaces --if-present",
-    "clean": "rimraf node_modules packages/*/node_modules apps/*/node_modules tools/*/node_modules packages/*/dist apps/*/dist",
-    "clean:install": "npm run clean && npm install",
-    "security-check": "npm audit --audit-level high",
-    "security-fix": "npm audit fix",
-    "update-deps": "npm update && npm run update-deps --workspaces --if-present",
-    "postinstall": "npm run type-check",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "lint": "lerna run lint",
+    "lint:fix": "lerna run lint -- --fix",
+    "bootstrap": "npm install",
+    "storybook": "npm run storybook --workspace=packages/shared",
+    "build-storybook": "npm run build-storybook --workspace=packages/shared"
   },
   "devDependencies": {
-    "@types/node": "^20.14.0",
-    "@typescript-eslint/eslint-plugin": "^7.18.0",
-    "@typescript-eslint/parser": "^7.18.0",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^18.19.0",
+    "@types/react": "^18.2.79",
+    "@types/react-dom": "^18.2.25",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "concurrently": "^8.2.2",
+    "css-loader": "^6.11.0",
     "eslint": "^8.57.0",
-    "eslint-plugin-react": "^7.35.0",
+    "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.2.1",
-    "prettier": "^3.3.3",
-    "rimraf": "^6.0.1",
-    "typescript": "^5.6.3",
-    "husky": "^9.1.6",
-    "lint-staged": "^15.2.10"
+    "html-webpack-plugin": "^5.6.0",
+    "husky": "^8.0.3",
+    "lerna": "^7.4.2",
+    "lint-staged": "^15.2.7",
+    "prettier": "^3.2.5",
+    "rimraf": "^5.0.7",
+    "sass": "^1.77.6",
+    "sass-loader": "^13.3.2",
+    "style-loader": "^3.3.4",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.4.5",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.2"
   },
   "engines": {
     "node": ">=18.0.0",
-    "npm": ">=9.0.0"
+    "npm": ">=8.0.0"
   },
-  "lint-staged": {
-    "*.{ts,tsx,js,jsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{json,md,yml,yaml}": [
-      "prettier --write"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm run test && npm run type-check"
-    }
+  "dependencies": {
+    "@flowcraft/shared": "^1.0.0",
+    "@storybook/react-vite": "^9.0.12"
   }
 }

@@ -2,8 +2,8 @@
 // 全局样式重置和基础样式
 
 // 引入变量和混合宏
-@import './variables.scss';
-@import './mixins.scss';
+@use './variables.scss' as *;
+@use './mixins.scss' as *;
 
 // CSS 重置
 *,

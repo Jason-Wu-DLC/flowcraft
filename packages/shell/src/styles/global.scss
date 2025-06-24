@@ -1,0 +1,136 @@
+// packages/shell/src/styles/global.scss
+
+// 引入共享样式变量
+@use '@flowcraft/shared/styles/variables.scss' as *;
+@use '@flowcraft/shared/styles/mixins.scss' as *;
+
+// 基础重置
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fc-font-family-sans);
+  font-size: var(--fc-font-size-base);
+  line-height: var(--fc-line-height-normal);
+  color: var(--fc-color-text-primary);
+  background-color: var(--fc-color-background-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+// 应用特定样式
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+// 文本元素
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: var(--fc-font-weight-semibold);
+  line-height: var(--fc-line-height-tight);
+  color: var(--fc-color-text-primary);
+}
+
+p {
+  margin: 0;
+  line-height: var(--fc-line-height-normal);
+  color: var(--fc-color-text-primary);
+}
+
+a {
+  color: var(--fc-color-primary-500);
+  text-decoration: none;
+  transition: color var(--fc-transition-base);
+
+  &:hover {
+    color: var(--fc-color-primary-600);
+    text-decoration: underline;
+  }
+}
+
+// 按钮重置
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  outline: none;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  text-decoration: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+// 输入框重置
+input, textarea, select {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  &::placeholder {
+    color: var(--fc-color-text-secondary);
+    opacity: 1;
+  }
+}
+
+// 图片和媒体
+img, svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+// 工具类
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

@@ -1,0 +1,42 @@
+// packages/designer/src/DesignerApp.module.scss
+.designerApp {
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--fc-color-background-secondary);
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--fc-spacing-md);
+}
+
+.projectInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.projectTitle {
+  margin: 0;
+  font-size: var(--fc-font-size-base);
+  font-weight: var(--fc-font-weight-semibold);
+  color: var(--fc-color-text-primary);
+}
+
+.projectStatus {
+  font-size: var(--fc-font-size-xs);
+  color: var(--fc-color-text-secondary);
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: var(--fc-spacing-sm);
+}
+
+.designerBody {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}

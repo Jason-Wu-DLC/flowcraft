@@ -3,38 +3,60 @@
   "version": "1.0.0",
   "description": "FlowCraft 共享组件库",
   "main": "dist/index.js",
+  "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
-    "clean": "rimraf dist",
+    "dev": "webpack serve --config webpack.config.js --mode development",
+    "build": "webpack --config webpack.config.js --mode production",
+    "build:lib": "vite build",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "lint": "eslint src --ext .ts,.tsx",
+    "clean": "rimraf dist"
   },
   "dependencies": {
     "classnames": "^2.5.1",
-    "framer-motion": "^12.18.1",
-    "lucide-react": "^0.519.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "framer-motion": "^10.18.0",
+    "lucide-react": "^0.263.1"
   },
   "devDependencies": {
-    "@storybook/addon-docs": "^9.0.12",
-    "@storybook/addon-onboarding": "^9.0.12",
-    "@storybook/react-vite": "^9.0.12",
-    "@types/node": "^24.0.3",
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.2.0",
-    "@vitejs/plugin-react": "^4.5.2",
-    "eslint-plugin-storybook": "^9.0.12",
-    "sass": "^1.89.2",
-    "storybook": "^9.0.12",
-    "typescript": "^5.8.3",
-    "vite": "^6.3.5",
-    "vite-plugin-dts": "^4.5.4"
+    "@storybook/addon-essentials": "^7.6.20",
+    "@storybook/addon-interactions": "^7.6.20",
+    "@storybook/addon-links": "^7.6.20",
+    "@storybook/blocks": "^7.6.20",
+    "@storybook/react": "^7.6.20",
+    "@storybook/react-webpack5": "^7.6.20",
+    "@storybook/test": "^7.6.20",
+    "@testing-library/jest-dom": "^6.4.6",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/react": "^18.2.79",
+    "@types/react-dom": "^18.2.25",
+    "@vitejs/plugin-react": "^4.3.1",
+    "css-loader": "^6.11.0",
+    "html-webpack-plugin": "^5.6.0",
+    "jsdom": "^22.1.0",
+    "rimraf": "^5.0.7",
+    "sass": "^1.77.6",
+    "sass-loader": "^13.3.2",
+    "storybook": "^7.6.20",
+    "style-loader": "^3.3.4",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.4.5",
+    "vite": "^4.5.3",
+    "vite-plugin-dts": "^3.9.1",
+    "vitest": "^1.6.0",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.2"
   },
   "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
   }
 }

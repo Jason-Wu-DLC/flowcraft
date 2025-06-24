@@ -1,30 +1,20 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "target": "ES2020",
-    "lib": ["DOM", "DOM.Iterable", "ES6"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@themes/*": ["src/themes/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@utils/*": ["src/utils/*"],
+      "@styles/*": ["src/styles/*"]
+    },
     "noEmit": false,
     "declaration": true,
-    "outDir": "./dist",
-    "jsx": "react-jsx",
-    "baseUrl": "./src",
-    "paths": {
-      "@/*": ["*"],
-      "@/components/*": ["components/*"],
-      "@/styles/*": ["styles/*"],
-      "*.scss": ["../types/scss.d.ts"],
-      "*.module.scss": ["../types/scss.d.ts"]
-    },
-    "typeRoots": ["node_modules/@types", "types"]
+    "declarationMap": true
   },
   "include": [
     "src/**/*",
@@ -32,6 +22,10 @@
   ],
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    "build",
+    "src/**/*.stories.tsx",
+    "src/**/*.test.tsx",
+    "src/demo/**/*"
   ]
 }

@@ -1,0 +1,78 @@
+// packages/designer/src/components/ComponentLibrary.module.scss
+.componentLibrary {
+  padding: var(--fc-spacing-md);
+  height: 100%;
+  overflow-y: auto;
+}
+
+.libraryHeader {
+  margin-bottom: var(--fc-spacing-lg);
+}
+
+.libraryTitle {
+  margin: 0 0 var(--fc-spacing-md);
+  font-size: var(--fc-font-size-lg);
+  font-weight: var(--fc-font-weight-semibold);
+  color: var(--fc-color-text-primary);
+}
+
+.componentGroup {
+  margin-bottom: var(--fc-spacing-lg);
+}
+
+.groupTitle {
+  margin: 0 0 var(--fc-spacing-sm);
+  font-size: var(--fc-font-size-sm);
+  font-weight: var(--fc-font-weight-medium);
+  color: var(--fc-color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.componentList {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--fc-spacing-sm);
+}
+
+.componentItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--fc-spacing-md);
+  background-color: var(--fc-color-background-primary);
+  border-radius: var(--fc-border-radius-md);
+  border: 1px solid var(--fc-color-border-light);
+  cursor: grab;
+  transition: all var(--fc-transition-base);
+
+  &:hover {
+    border-color: var(--fc-color-primary-300);
+    box-shadow: var(--fc-shadow-sm);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    cursor: grabbing;
+    transform: translateY(0);
+  }
+}
+
+.componentIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background-color: var(--fc-color-primary-50);
+  color: var(--fc-color-primary-600);
+  border-radius: var(--fc-border-radius-md);
+  margin-bottom: var(--fc-spacing-xs);
+}
+
+.componentName {
+  font-size: var(--fc-font-size-xs);
+  font-weight: var(--fc-font-weight-medium);
+  color: var(--fc-color-text-primary);
+  text-align: center;
+}

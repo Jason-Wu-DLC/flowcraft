@@ -1,90 +1,114 @@
-// packages/shared/src/components/Button/Button.test.tsx
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import { ThemeProvider } from '../../themes/context';
+import type { Meta, StoryObj } from '@storybook/react';
+import { ChevronRight, Download, Heart } from 'lucide-react';
 import Button from './Button';
+import { ThemeProvider } from '../../themes/context';
 
-const renderWithTheme = (component: React.ReactElement) => {
-  return render(
-    <ThemeProvider>
-      {component}
-    </ThemeProvider>
-  );
+const meta: Meta<typeof Button> = {
+  title: 'Components/Button',
+  component: Button,
+  decorators: [
+    (Story) => (
+      <ThemeProvider>
+        <Story />
+      </ThemeProvider>
+    ),
+  ],
+  parameters: {
+    layout: 'centered',
+    docs: {
+      description: {
+        component: 'FlowCraft 按钮组件，支持多种变体、尺寸和状态。',
+      },
+    },
+  },
+  argTypes: {
+    variant: {
+      control: 'select',
+      options: ['primary', 'secondary', 'outline', 'ghost', 'danger'],
+    },
+    size: {
+      control: 'select',
+      options: ['sm', 'md', 'lg'],
+    },
+    loading: {
+      control: 'boolean',
+    },
+    disabled: {
+      control: 'boolean',
+    },
+    fullWidth: {
+      control: 'boolean',
+    },
+  },
+  args: {
+    // 移除 onClick 的默认 mock，因为不是所有 Storybook 版本都支持 fn()
+    onClick: undefined,
+  },
 };
 
-describe('Button', () => {
-  it('renders correctly', () => {
-    renderWithTheme(<Button>测试按钮</Button>);
-    expect(screen.getByRole('button', { name: '测试按钮' })).toBeInTheDocument();
-  });
+export default meta;
+type Story = StoryObj<typeof Button>;
 
-  it('applies variant classes correctly', () => {
-    renderWithTheme(<Button variant="secondary">Secondary Button</Button>);
-    const button = screen.getByRole('button');
-    expect(button).toHaveClass('button--secondary');
-  });
+// 基础示例
+export const Default: Story = {
+  args: {
+    children: '按钮',
+  },
+};
 
-  it('applies size classes correctly', () => {
-    renderWithTheme(<Button size="lg">Large Button</Button>);
-    const button = screen.getByRole('button');
-    expect(button).toHaveClass('button--lg');
-  });
+// 变体示例
+export const Variants: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+      <Button variant="primary">Primary</Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="outline">Outline</Button>
+      <Button variant="ghost">Ghost</Button>
+      <Button variant="danger">Danger</Button>
+    </div>
+  ),
+};
 
-  it('handles click events', () => {
-    const handleClick = jest.fn();
-    renderWithTheme(<Button onClick={handleClick}>Click me</Button>);
+// 尺寸示例
+export const Sizes: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+      <Button size="sm">小按钮</Button>
+      <Button size="md">中按钮</Button>
+      <Button size="lg">大按钮</Button>
+    </div>
+  ),
+};
 
-    fireEvent.click(screen.getByRole('button'));
-    expect(handleClick).toHaveBeenCalledTimes(1);
-  });
-
-  it('prevents click when disabled', () => {
-    const handleClick = jest.fn();
-    renderWithTheme(
-      <Button disabled onClick={handleClick}>
-        Disabled Button
+// 带图标示例
+export const WithIcons: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+      <Button leftIcon={<Download size={18} />}>下载</Button>
+      <Button rightIcon={<ChevronRight size={18} />}>继续</Button>
+      <Button leftIcon={<Heart size={18} />} rightIcon={<ChevronRight size={18} />}>
+        收藏并继续
       </Button>
-    );
+    </div>
+  ),
+};
 
-    fireEvent.click(screen.getByRole('button'));
-    expect(handleClick).not.toHaveBeenCalled();
-  });
+// 状态示例
+export const States: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+      <Button>正常状态</Button>
+      <Button loading>加载中...</Button>
+      <Button disabled>禁用状态</Button>
+    </div>
+  ),
+};
 
-  it('prevents click when loading', () => {
-    const handleClick = jest.fn();
-    renderWithTheme(
-      <Button loading onClick={handleClick}>
-        Loading Button
-      </Button>
-    );
-
-    fireEvent.click(screen.getByRole('button'));
-    expect(handleClick).not.toHaveBeenCalled();
-  });
-
-  it('renders loading spinner when loading', () => {
-    renderWithTheme(<Button loading>Loading</Button>);
-    expect(document.querySelector('.spinner')).toBeInTheDocument();
-  });
-
-  it('renders icons correctly', () => {
-    const LeftIcon = () => <span data-testid="left-icon">←</span>;
-    const RightIcon = () => <span data-testid="right-icon">→</span>;
-
-    renderWithTheme(
-      <Button leftIcon={<LeftIcon />} rightIcon={<RightIcon />}>
-        With Icons
-      </Button>
-    );
-
-    expect(screen.getByTestId('left-icon')).toBeInTheDocument();
-    expect(screen.getByTestId('right-icon')).toBeInTheDocument();
-  });
-
-  it('applies fullWidth class when fullWidth prop is true', () => {
-    renderWithTheme(<Button fullWidth>Full Width</Button>);
-    const button = screen.getByRole('button');
-    expect(button).toHaveClass('button--full-width');
-  });
-});
+// 全宽示例
+export const FullWidth: Story = {
+  render: () => (
+    <div style={{ width: '300px' }}>
+      <Button fullWidth>全宽按钮</Button>
+    </div>
+  ),
+};

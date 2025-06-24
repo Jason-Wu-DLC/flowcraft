@@ -1,0 +1,1 @@
+{"version":3,"file":"useModal.d.ts","sourceRoot":"","sources":["../../src/hooks/useModal.ts"],"names":[],"mappings":"AAEA,MAAM,WAAW,cAAc;IAC7B,MAAM,EAAE,OAAO,CAAC;IAChB,IAAI,EAAE,MAAM,IAAI,CAAC;IACjB,KAAK,EAAE,MAAM,IAAI,CAAC;IAClB,MAAM,EAAE,MAAM,IAAI,CAAC;CACpB;AAED,eAAO,MAAM,QAAQ,GAAI,sBAAoB,KAAG,cAqB/C,CAAC"}

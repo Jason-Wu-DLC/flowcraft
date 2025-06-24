@@ -1,0 +1,98 @@
+// packages/shell/src/components/MicrofrontendFallback.module.scss
+.fallback {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--fc-color-background-secondary);
+}
+
+.fallbackContent {
+  text-align: center;
+  padding: var(--fc-spacing-xxl);
+  max-width: 600px;
+}
+
+.fallbackIcon {
+  color: var(--fc-color-warning);
+  margin-bottom: var(--fc-spacing-lg);
+}
+
+.fallbackTitle {
+  font-size: var(--fc-font-size-2xl);
+  font-weight: var(--fc-font-weight-bold);
+  color: var(--fc-color-text-primary);
+  margin-bottom: var(--fc-spacing-md);
+}
+
+.fallbackDescription {
+  font-size: var(--fc-font-size-base);
+  color: var(--fc-color-text-secondary);
+  margin-bottom: var(--fc-spacing-md);
+  line-height: var(--fc-line-height-relaxed);
+}
+
+.fallbackReasons {
+  text-align: left;
+  margin: var(--fc-spacing-lg) 0;
+  padding: 0 var(--fc-spacing-xl);
+
+  li {
+    margin-bottom: var(--fc-spacing-xs);
+    color: var(--fc-color-text-secondary);
+  }
+}
+
+.fallbackInfo {
+  background-color: var(--fc-color-gray-50);
+  padding: var(--fc-spacing-md);
+  border-radius: var(--fc-border-radius-md);
+  margin: var(--fc-spacing-lg) 0;
+
+  code {
+    font-family: var(--fc-font-family-mono);
+    font-size: var(--fc-font-size-sm);
+    color: var(--fc-color-primary-600);
+  }
+}
+
+.fallbackActions {
+  display: flex;
+  gap: var(--fc-spacing-md);
+  justify-content: center;
+  margin: var(--fc-spacing-lg) 0;
+  flex-wrap: wrap;
+}
+
+.devHint {
+  background-color: var(--fc-color-background-elevated);
+  border: 1px solid var(--fc-color-border-medium);
+  border-radius: var(--fc-border-radius-md);
+  padding: var(--fc-spacing-lg);
+  margin-top: var(--fc-spacing-xl);
+  text-align: left;
+
+  h3 {
+    margin: 0 0 var(--fc-spacing-sm);
+    color: var(--fc-color-text-primary);
+    font-size: var(--fc-font-size-lg);
+  }
+
+  p {
+    margin: 0 0 var(--fc-spacing-sm);
+    color: var(--fc-color-text-secondary);
+  }
+
+  pre {
+    background-color: var(--fc-color-gray-900);
+    color: var(--fc-color-gray-100);
+    padding: var(--fc-spacing-md);
+    border-radius: var(--fc-border-radius-sm);
+    overflow-x: auto;
+
+    code {
+      font-family: var(--fc-font-family-mono);
+      font-size: var(--fc-font-size-sm);
+    }
+  }
+}

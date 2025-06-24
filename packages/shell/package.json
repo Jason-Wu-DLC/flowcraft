@@ -1,29 +1,35 @@
 {
   "name": "@flowcraft/shell",
   "version": "1.0.0",
-  "description": "FlowCraft 主应用壳",
-  "main": "dist/index.js",
+  "description": "FlowCraft 主应用Shell",
+  "private": true,
   "scripts": {
-    "dev": "webpack serve --mode development",
-    "build": "webpack --mode production",
-    "clean": "rimraf dist"
+    "dev": "webpack serve --config webpack.config.js --mode development",
+    "build": "webpack --config webpack.config.js --mode production",
+    "clean": "rimraf dist",
+    "lint": "eslint src --ext .ts,.tsx"
   },
   "dependencies": {
-    "@flowcraft/shared": "*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.15.0"
+    "react-router-dom": "^6.23.1",
+    "framer-motion": "^10.18.0",
+    "classnames": "^2.5.1",
+    "lucide-react": "^0.263.1"
   },
   "devDependencies": {
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.2.0",
-    "html-webpack-plugin": "^5.5.0",
-    "typescript": "^5.0.0",
-    "webpack": "^5.88.0",
-    "webpack-cli": "^5.1.0",
-    "webpack-dev-server": "^4.15.0",
-    "ts-loader": "^9.4.0",
-    "css-loader": "^6.8.0",
-    "style-loader": "^3.3.0"
+    "@types/react": "^18.2.79",
+    "@types/react-dom": "^18.2.25",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.2",
+    "html-webpack-plugin": "^5.6.0",
+    "ts-loader": "^9.5.1",
+    "css-loader": "^6.11.0",
+    "style-loader": "^3.3.4",
+    "sass-loader": "^13.3.2",
+    "sass": "^1.77.6",
+    "typescript": "^5.4.5",
+    "rimraf": "^5.0.7"
   }
 }

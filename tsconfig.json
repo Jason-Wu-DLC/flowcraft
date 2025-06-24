@@ -1,36 +1,42 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "lib": ["DOM", "DOM.Iterable", "ES6"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
     "module": "ESNext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": false,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "jsx": "react-jsx",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
     "declaration": true,
-    "declarationDir": "./dist/types",
-    "outDir": "./dist",
+    "declarationMap": true,
+    "sourceMap": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
-    },
-    "types": ["node", "jest", "@testing-library/jest-dom"]
+      "@flowcraft/shared": ["packages/shared/src/index.ts"],
+      "@flowcraft/shared/*": ["packages/shared/src/*"],
+      "@flowcraft/designer/*": ["packages/designer/src/*"],
+      "@flowcraft/preview/*": ["packages/preview/src/*"],
+      "@flowcraft/collaboration/*": ["packages/collaboration/src/*"],
+      "@flowcraft/ai-assistant/*": ["packages/ai-assistant/src/*"]
+    }
   },
   "include": [
-    "src/**/*",
-    "src/**/*.json"
+    "packages/*/src/**/*",
+    "packages/*/types/**/*"
   ],
   "exclude": [
     "node_modules",
-    "dist",
-    "**/*.stories.tsx",
+    "packages/*/dist",
+    "packages/*/build",
+    "**/*.test.ts",
     "**/*.test.tsx"
   ]
 }

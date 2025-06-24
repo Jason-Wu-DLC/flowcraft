@@ -1,5 +1,4 @@
-// packages/shared/src/styles/mixins.scss
-// 常用混合宏
+// packages/shared/src/styles/mixins.scss - 修复版本
 
 // 文本截断
 @mixin text-truncate {
@@ -42,37 +41,37 @@
 
 // 响应式断点
 @mixin mobile {
-  @media (max-width: #{var(--fc-breakpoint-sm) - 1px}) {
+  @media (max-width: 768px) {
     @content;
   }
 }
 
 @mixin tablet {
-  @media (min-width: #{var(--fc-breakpoint-sm)}) and (max-width: #{var(--fc-breakpoint-lg) - 1px}) {
+  @media (min-width: 769px) and (max-width: 1024px) {
     @content;
   }
 }
 
 @mixin desktop {
-  @media (min-width: #{var(--fc-breakpoint-lg)}) {
+  @media (min-width: 1025px) {
     @content;
   }
 }
 
 @mixin mobile-up {
-  @media (min-width: #{var(--fc-breakpoint-sm)}) {
+  @media (min-width: 769px) {
     @content;
   }
 }
 
 @mixin tablet-up {
-  @media (min-width: #{var(--fc-breakpoint-md)}) {
+  @media (min-width: 1025px) {
     @content;
   }
 }
 
 @mixin desktop-up {
-  @media (min-width: #{var(--fc-breakpoint-lg)}) {
+  @media (min-width: 1200px) {
     @content;
   }
 }
@@ -136,12 +135,12 @@
 
   &::-webkit-scrollbar-track {
     background: $track-color;
-    border-radius: #{$width / 2};
+    border-radius: calc(#{$width} / 2);
   }
 
   &::-webkit-scrollbar-thumb {
     background: $thumb-color;
-    border-radius: #{$width / 2};
+    border-radius: calc(#{$width} / 2);
 
     &:hover {
       background: var(--fc-color-gray-400);
