@@ -1,6 +1,5 @@
 // packages/designer/src/DesignerApp.tsx
 import React, { useState } from 'react';
-import { ThemeProvider } from '@flowcraft/shared';
 import { DesignerProvider } from './contexts/DesignerContext';
 import ComponentLibrary from './components/ComponentLibrary';
 import CanvasArea from './components/CanvasArea';
@@ -12,7 +11,6 @@ const DesignerApp: React.FC = () => {
   const [leftSidebarCollapsed, setLeftSidebarCollapsed] = useState(false);
 
   return (
-    <ThemeProvider>
       <DesignerProvider>
         <div className={styles.designerApp}>
           {/* 头部工具栏 */}
@@ -60,7 +58,6 @@ const DesignerApp: React.FC = () => {
           </div>
         </div>
       </DesignerProvider>
-    </ThemeProvider>
   );
 };
 

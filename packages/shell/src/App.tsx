@@ -1,24 +1,22 @@
-// packages/shell/src/App.tsx
 import React, { Suspense, lazy } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom'; // 移除 BrowserRouter
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AppProvider } from './contexts/AppContext';
 import ErrorBoundary from './components/ErrorBoundary';
 import LoadingSpinner from './components/LoadingSpinner';
 import Navigation from './components/Navigation';
-import { ThemeProvider } from './themes/context';
+
 import './App.scss';
 
-// 懒加载页面
+// 懒加载页面组件
+const HomePage = lazy(() => import('./pages/HomePage'));
 const DesignerPage = lazy(() => import('./pages/DesignerPage'));
 const PreviewPage = lazy(() => import('./pages/PreviewPage'));
 const CollaborationPage = lazy(() => import('./pages/CollaborationPage'));
-const HomePage = lazy(() => import('./pages/HomePage'));
 
 const App: React.FC = () => {
   return (
-    <ThemeProvider>
-      <AppProvider>
-        {/* 移除 Router，因为已经在 index.tsx 中定义了 */}
+    <AppProvider>
+      <Router>
         <div className="app">
           <header className="app-header">
             <Navigation />
@@ -38,8 +36,8 @@ const App: React.FC = () => {
             </ErrorBoundary>
           </main>
         </div>
-      </AppProvider>
-    </ThemeProvider>
+      </Router>
+    </AppProvider>
   );
 };
 

@@ -9,7 +9,7 @@ module.exports = (env, argv) => {
 
   return {
     mode: argv.mode || 'development',
-    entry: './src/index.tsx',
+    entry: './src/demo.tsx',
     target: 'web',
 
     resolve: {
@@ -107,12 +107,12 @@ module.exports = (env, argv) => {
         shared: {
           react: {
             singleton: true,
-            requiredVersion: packageJson.dependencies.react,
+            requiredVersion: packageJson.peerDependencies.react,
             eager: false,
           },
           'react-dom': {
             singleton: true,
-            requiredVersion: packageJson.dependencies['react-dom'],
+            requiredVersion: packageJson.peerDependencies['react-dom'],
             eager: false,
           },
           'framer-motion': {
