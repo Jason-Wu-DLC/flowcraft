@@ -9,7 +9,7 @@ module.exports = (env, argv) => {
 
   return {
     mode: argv.mode || 'development',
-    entry: './src/index.tsx',
+    entry: './src/bootstrap.tsx', // 改为 bootstrap 入口点
 
     resolve: {
       extensions: ['.tsx', '.ts', '.jsx', '.js'],
@@ -69,25 +69,26 @@ module.exports = (env, argv) => {
           shared: isProduction
             ? 'shared@https://flowcraft-shared.netlify.app/remoteEntry.js'
             : 'shared@http://localhost:3001/remoteEntry.js',
+          designer: isProduction
+            ? 'designer@https://flowcraft-designer.netlify.app/remoteEntry.js'
+            : 'designer@http://localhost:3002/remoteEntry.js',
         },
         shared: {
           react: {
             singleton: true,
             requiredVersion: packageJson.dependencies.react,
-            eager: true, // 添加 eager 消费
+            eager: false, // 关键：改为 false
           },
           'react-dom': {
             singleton: true,
             requiredVersion: packageJson.dependencies['react-dom'],
-            eager: true, // 添加 eager 消费
+            eager: false, // 关键：改为 false
           },
-          // 添加 react-router-dom 共享配置
           'react-router-dom': {
             singleton: true,
             requiredVersion: packageJson.dependencies['react-router-dom'],
-            eager: false, // 设为 false 避免 eager consumption 错误
+            eager: false,
           },
-          // 添加其他依赖
           'framer-motion': {
             singleton: true,
             requiredVersion: packageJson.dependencies['framer-motion'],
@@ -120,7 +121,6 @@ module.exports = (env, argv) => {
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
-      // 添加静态文件服务
       static: {
         directory: path.join(__dirname, 'public'),
         publicPath: '/',
@@ -129,18 +129,8 @@ module.exports = (env, argv) => {
 
     devtool: isProduction ? 'source-map' : 'eval-source-map',
 
-    // 添加优化配置
     optimization: {
-      splitChunks: {
-        chunks: 'async',
-        cacheGroups: {
-          shared: {
-            name: 'shared',
-            chunks: 'all',
-            enforce: true,
-          },
-        },
-      },
+      splitChunks: false, // 让 Module Federation 处理代码分割
     },
   };
 };

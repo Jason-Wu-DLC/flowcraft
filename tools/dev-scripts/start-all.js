@@ -2,62 +2,161 @@
 const { spawn } = require('child_process');
 const path = require('path');
 
+const processes = [];
+
+// 定义服务启动配置
 const services = [
-  { name: 'shared', port: 3001, path: 'packages/shared' },
-  { name: 'designer', port: 3002, path: 'packages/designer' },
-  { name: 'shell', port: 3000, path: 'packages/shell' },
+  {
+    name: '共享组件库',
+    command: 'npm',
+    args: ['run', 'dev'],
+    cwd: path.resolve(__dirname, '../../packages/shared'),
+    port: 3001,
+    color: '\x1b[32m', // 绿色
+  },
+  {
+    name: '设计器',
+    command: 'npm',
+    args: ['run', 'dev'],
+    cwd: path.resolve(__dirname, '../../packages/designer'),
+    port: 3002,
+    color: '\x1b[34m', // 蓝色
+    delay: 8000, // 等待 8 秒后启动
+  },
+  {
+    name: '主应用',
+    command: 'npm',
+    args: ['run', 'dev'],
+    cwd: path.resolve(__dirname, '../../packages/shell'),
+    port: 3000,
+    color: '\x1b[33m', // 黄色
+    delay: 15000, // 等待 15 秒后启动
+  },
 ];
 
-const startService = (service) => {
-  console.log(`🚀 Starting ${service.name} on port ${service.port}...`);
+// 启动单个服务
+function startService(service) {
+  return new Promise((resolve) => {
+    const startTime = Date.now();
 
-  const child = spawn('npm', ['run', 'dev'], {
-    cwd: path.resolve(process.cwd(), service.path),
-    stdio: 'inherit',
-    shell: true,
+    console.log(`${service.color}[${service.name}] 正在启动... (端口: ${service.port})\x1b[0m`);
+
+    const child = spawn(service.command, service.args, {
+      cwd: service.cwd,
+      stdio: 'pipe',
+      shell: true
+    });
+
+    let resolved = false;
+
+    child.stdout.on('data', (data) => {
+      const message = data.toString();
+      console.log(`${service.color}[${service.name}] ${message.trim()}\x1b[0m`);
+
+      // 检测服务启动成功的多种可能信号
+      if (!resolved && (
+        message.includes('webpack compiled') ||
+        message.includes('Server started') ||
+        message.includes('Local:') ||
+        message.includes('compiled with') ||
+        message.includes('successfully')
+      )) {
+        const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+        console.log(`${service.color}[${service.name}] ✅ 启动成功! (用时: ${elapsed}s)\x1b[0m`);
+        resolved = true;
+        resolve();
+      }
+    });
+
+    child.stderr.on('data', (data) => {
+      const message = data.toString();
+      console.log(`${service.color}[${service.name}] ${message.trim()}\x1b[0m`);
+
+      // 对于 webpack 的警告信息，也认为是启动成功
+      if (!resolved && message.includes('webpack compiled')) {
+        const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+        console.log(`${service.color}[${service.name}] ✅ 启动成功! (用时: ${elapsed}s)\x1b[0m`);
+        resolved = true;
+        resolve();
+      }
+    });
+
+    child.on('close', (code) => {
+      console.log(`${service.color}[${service.name}] 进程退出，代码: ${code}\x1b[0m`);
+    });
+
+    child.on('error', (error) => {
+      console.error(`${service.color}[${service.name}] ❌ 启动失败: ${error.message}\x1b[0m`);
+      if (!resolved) {
+        resolved = true;
+        resolve(); // 即使出错也继续
+      }
+    });
+
+    processes.push(child);
+
+    // 超时保护：如果 30 秒内没有检测到启动成功，强制继续
+    setTimeout(() => {
+      if (!resolved) {
+        console.log(`${service.color}[${service.name}] ⚠️  超时检测，假设启动成功\x1b[0m`);
+        resolved = true;
+        resolve();
+      }
+    }, 30000);
   });
+}
 
-  child.on('error', (err) => {
-    console.error(`❌ Failed to start ${service.name}:`, err);
-  });
+// 延迟启动
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-  child.on('exit', (code) => {
-    if (code !== 0) {
-      console.error(`❌ ${service.name} exited with code ${code}`);
+// 主启动函数
+async function startAll() {
+  console.log('\x1b[36m🚀 FlowCraft 微前端开发环境启动中...\x1b[0m\n');
+
+  try {
+    for (const service of services) {
+      if (service.delay) {
+        console.log(`⏳ 等待 ${service.delay / 1000} 秒后启动 ${service.name}...`);
+        await delay(service.delay);
+      }
+
+      await startService(service);
+
+      // 每个服务启动后稍微等待一下
+      await delay(2000);
+    }
+
+    console.log('\n\x1b[32m✅ 所有服务启动完成!\x1b[0m');
+    console.log('\x1b[36m📝 访问地址:\x1b[0m');
+    console.log('  • 主应用: \x1b[33mhttp://localhost:3000\x1b[0m');
+    console.log('  • 共享组件: \x1b[32mhttp://localhost:3001\x1b[0m');
+    console.log('  • 设计器: \x1b[34mhttp://localhost:3002\x1b[0m');
+    console.log('\n\x1b[35m按 Ctrl+C 停止所有服务\x1b[0m');
+
+  } catch (error) {
+    console.error('\n\x1b[31m❌ 启动失败:\x1b[0m', error.message);
+    process.exit(1);
+  }
+}
+
+// 处理进程退出
+process.on('SIGINT', () => {
+  console.log('\n\x1b[33m🛑 正在停止所有服务...\x1b[0m');
+
+  processes.forEach((child, index) => {
+    if (child && !child.killed) {
+      child.kill('SIGTERM');
+      console.log(`\x1b[36m[服务 ${index + 1}] 已停止\x1b[0m`);
     }
   });
 
-  return child;
-};
-
-const startAll = () => {
-  console.log('🏁 Starting all FlowCraft services...\n');
-
-  const processes = services.map(startService);
-
-  // 优雅关闭
-  process.on('SIGINT', () => {
-    console.log('\n🛑 Shutting down all services...');
-    processes.forEach(child => {
-      child.kill('SIGINT');
-    });
-    process.exit(0);
-  });
-
-  // 等待一段时间后显示访问信息
   setTimeout(() => {
-    console.log('\n✅ All services started!');
-    console.log('\n📋 Service URLs:');
-    services.forEach(service => {
-      console.log(`   ${service.name}: http://localhost:${service.port}`);
-    });
-    console.log('\n🌟 Main Application: http://localhost:3000');
-    console.log('📚 Storybook: http://localhost:6006');
-  }, 5000);
-};
+    console.log('\x1b[32m✅ 所有服务已停止\x1b[0m');
+    process.exit(0);
+  }, 1000);
+});
 
-if (require.main === module) {
-  startAll();
-}
-
-module.exports = { startAll };
+// 启动所有服务
+startAll();

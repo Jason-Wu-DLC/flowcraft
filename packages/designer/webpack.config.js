@@ -9,7 +9,7 @@ module.exports = (env, argv) => {
 
   return {
     mode: argv.mode || 'development',
-    entry: './src/index.tsx',
+    entry: './src/bootstrap.tsx', // 改为 bootstrap 入口点
 
     resolve: {
       extensions: ['.tsx', '.ts', '.jsx', '.js'],
@@ -52,7 +52,7 @@ module.exports = (env, argv) => {
             {
               loader: 'sass-loader',
               options: {
-                api: 'modern', // 修复 API 配置
+                api: 'modern',
               },
             },
           ],
@@ -66,7 +66,7 @@ module.exports = (env, argv) => {
             {
               loader: 'sass-loader',
               options: {
-                api: 'modern', // 修复 API 配置
+                api: 'modern',
               },
             },
           ],
@@ -86,23 +86,36 @@ module.exports = (env, argv) => {
           './DesignerApp': './src/DesignerApp',
         },
         remotes: {
-          // 暂时注释掉远程模块，使用本地别名
-          // shared: isProduction
-          //   ? 'shared@https://flowcraft-shared.netlify.app/remoteEntry.js'
-          //   : 'shared@http://localhost:3001/remoteEntry.js',
+          // 启用远程模块
+          shared: isProduction
+            ? 'shared@https://flowcraft-shared.netlify.app/remoteEntry.js'
+            : 'shared@http://localhost:3001/remoteEntry.js',
         },
         shared: {
           react: {
             singleton: true,
             requiredVersion: packageJson.dependencies.react,
+            eager: false, // 关键：设为 false
           },
           'react-dom': {
             singleton: true,
             requiredVersion: packageJson.dependencies['react-dom'],
+            eager: false, // 关键：设为 false
           },
           'framer-motion': {
             singleton: true,
-            requiredVersion: packageJson.dependencies?.['framer-motion'] || '^10.0.0',
+            requiredVersion: packageJson.dependencies['framer-motion'] || '^10.18.0',
+            eager: false,
+          },
+          'lucide-react': {
+            singleton: true,
+            requiredVersion: packageJson.dependencies['lucide-react'] || '^0.263.1',
+            eager: false,
+          },
+          classnames: {
+            singleton: true,
+            requiredVersion: packageJson.dependencies.classnames || '^2.5.1',
+            eager: false,
           },
         },
       }),
@@ -117,11 +130,20 @@ module.exports = (env, argv) => {
     devServer: {
       port: 3002,
       hot: true,
+      historyApiFallback: true,
       headers: {
         'Access-Control-Allow-Origin': '*',
+      },
+      static: {
+        directory: path.join(__dirname, 'public'),
+        publicPath: '/',
       },
     },
 
     devtool: isProduction ? 'source-map' : 'eval-source-map',
+
+    optimization: {
+      splitChunks: false, // 让 Module Federation 处理代码分割
+    },
   };
 };

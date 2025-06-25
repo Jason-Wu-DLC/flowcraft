@@ -1,6 +1,6 @@
 // packages/shell/src/App.tsx
 import React, { Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom'; // 移除 BrowserRouter
 import { AppProvider } from './contexts/AppContext';
 import ErrorBoundary from './components/ErrorBoundary';
 import LoadingSpinner from './components/LoadingSpinner';
@@ -18,27 +18,26 @@ const App: React.FC = () => {
   return (
     <ThemeProvider>
       <AppProvider>
-        <Router>
-          <div className="app">
-            <header className="app-header">
-              <Navigation />
-            </header>
+        {/* 移除 Router，因为已经在 index.tsx 中定义了 */}
+        <div className="app">
+          <header className="app-header">
+            <Navigation />
+          </header>
 
-            <main className="app-main">
-              <ErrorBoundary>
-                <Suspense fallback={<LoadingSpinner />}>
-                  <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/designer/*" element={<DesignerPage />} />
-                    <Route path="/preview/*" element={<PreviewPage />} />
-                    <Route path="/collaboration/*" element={<CollaborationPage />} />
-                    <Route path="*" element={<Navigate to="/" replace />} />
-                  </Routes>
-                </Suspense>
-              </ErrorBoundary>
-            </main>
-          </div>
-        </Router>
+          <main className="app-main">
+            <ErrorBoundary>
+              <Suspense fallback={<LoadingSpinner />}>
+                <Routes>
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/designer/*" element={<DesignerPage />} />
+                  <Route path="/preview/*" element={<PreviewPage />} />
+                  <Route path="/collaboration/*" element={<CollaborationPage />} />
+                  <Route path="*" element={<Navigate to="/" replace />} />
+                </Routes>
+              </Suspense>
+            </ErrorBoundary>
+          </main>
+        </div>
       </AppProvider>
     </ThemeProvider>
   );

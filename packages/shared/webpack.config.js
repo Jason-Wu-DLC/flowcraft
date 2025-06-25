@@ -1,4 +1,3 @@
-// packages/shared/webpack.config.js
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const path = require('path');
@@ -57,13 +56,33 @@ module.exports = (env, argv) => {
                 },
               },
             },
-            'sass-loader',
+            {
+              loader: 'sass-loader',
+              options: {
+                api: 'modern', // 确保所有 sass-loader 都有 api 配置
+                sassOptions: {
+                  outputStyle: 'expanded',
+                },
+              },
+            },
           ],
         },
         {
           test: /\.scss$/,
           exclude: /\.module\.scss$/,
-          use: ['style-loader', 'css-loader', 'sass-loader'],
+          use: [
+            'style-loader',
+            'css-loader',
+            {
+              loader: 'sass-loader',
+              options: {
+                api: 'modern', // 确保所有 sass-loader 都有 api 配置
+                sassOptions: {
+                  outputStyle: 'expanded',
+                },
+              },
+            },
+          ],
         },
         {
           test: /\.css$/,
@@ -89,14 +108,13 @@ module.exports = (env, argv) => {
           react: {
             singleton: true,
             requiredVersion: packageJson.dependencies.react,
-            eager: true, // shared 模块设为 eager
+            eager: false,
           },
           'react-dom': {
             singleton: true,
             requiredVersion: packageJson.dependencies['react-dom'],
-            eager: true, // shared 模块设为 eager
+            eager: false,
           },
-          // 添加完整的共享依赖配置
           'framer-motion': {
             singleton: true,
             requiredVersion: packageJson.dependencies['framer-motion'],
@@ -141,7 +159,6 @@ module.exports = (env, argv) => {
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
-      // 添加静态文件服务
       static: {
         directory: path.resolve(__dirname, 'public'),
         publicPath: '/',
@@ -150,9 +167,8 @@ module.exports = (env, argv) => {
 
     devtool: isProduction ? 'source-map' : 'eval-source-map',
 
-    // 添加外部化配置
-    externals: {
-      // 防止某些库被重复打包
+    optimization: {
+      splitChunks: false,
     },
   };
 };
