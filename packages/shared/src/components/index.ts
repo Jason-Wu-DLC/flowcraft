@@ -30,3 +30,5 @@ export type {
   GridProps,
   GridItemProps,
 } from './Layout';
+
+export { default as Textarea } from './Textarea';

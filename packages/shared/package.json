@@ -22,7 +22,9 @@
   "dependencies": {
     "classnames": "^2.5.1",
     "framer-motion": "^10.18.0",
-    "lucide-react": "^0.263.1"
+    "lucide-react": "^0.263.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.6.20",

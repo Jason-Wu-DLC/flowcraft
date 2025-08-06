@@ -24,13 +24,22 @@ const services = [
     delay: 8000, // 等待 8 秒后启动
   },
   {
+    name: '预览器',
+    command: 'npm',
+    args: ['run', 'dev'],
+    cwd: path.resolve(__dirname, '../../packages/preview'),
+    port: 3003,
+    color: '\x1b[35m', // 紫色
+    delay: 12000, // 等待 12 秒后启动
+  },
+  {
     name: '主应用',
     command: 'npm',
     args: ['run', 'dev'],
     cwd: path.resolve(__dirname, '../../packages/shell'),
     port: 3000,
     color: '\x1b[33m', // 黄色
-    delay: 15000, // 等待 15 秒后启动
+    delay: 18000, // 等待 18 秒后启动
   },
 ];
 
@@ -133,6 +142,7 @@ async function startAll() {
     console.log('  • 主应用: \x1b[33mhttp://localhost:3000\x1b[0m');
     console.log('  • 共享组件: \x1b[32mhttp://localhost:3001\x1b[0m');
     console.log('  • 设计器: \x1b[34mhttp://localhost:3002\x1b[0m');
+    console.log('  • 预览器: \x1b[35mhttp://localhost:3003\x1b[0m');
     console.log('\n\x1b[35m按 Ctrl+C 停止所有服务\x1b[0m');
 
   } catch (error) {

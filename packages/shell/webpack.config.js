@@ -77,12 +77,12 @@ module.exports = (env, argv) => {
           react: {
             singleton: true,
             requiredVersion: packageJson.dependencies.react,
-            eager: false, // 关键：改为 false
+            eager: true, // 关键：改为 true
           },
           'react-dom': {
             singleton: true,
             requiredVersion: packageJson.dependencies['react-dom'],
-            eager: false, // 关键：改为 false
+            eager: true, // 关键：改为 true
           },
           'react-router-dom': {
             singleton: true,

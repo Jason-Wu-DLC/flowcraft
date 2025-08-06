@@ -5,16 +5,16 @@ import { Link } from 'react-router-dom';
 const HomePage: React.FC = () => {
   const features = [
     {
-      title: 'AI 流程设计师',
-      description: '通过自然语言描述业务需求，AI 自动生成流程图和组件配置',
-      link: '/designer',
-      icon: '🤖',
+      title: '组件市场',
+      description: '浏览、下载和管理各类流程组件，丰富你的设计工具箱',
+      link: '/marketplace',
+      icon: '🛒',
     },
     {
-      title: '实时协作',
-      description: '多人同时编辑同一个流程，类似 Figma 的协作体验',
-      link: '/collaboration',
-      icon: '👥',
+      title: '版本管理',
+      description: '追踪流程设计历史，支持版本对比和一键回滚',
+      link: '/versions',
+      icon: '📦',
     },
     {
       title: '实时预览',
@@ -123,7 +123,7 @@ const HomePage: React.FC = () => {
           maxWidth: '600px',
           margin: '0 auto'
         }}>
-          {['500+', '1000+', '10K+', '98%'].map((stat, index) => (
+          {['200+', '500+', '5K+', '98%'].map((stat, index) => (
             <div key={index} style={{ textAlign: 'center' }}>
               <div style={{
                 fontSize: '2rem',

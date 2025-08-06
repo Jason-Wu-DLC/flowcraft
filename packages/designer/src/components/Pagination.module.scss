@@ -1,0 +1,83 @@
+.pagination {
+  display: block;
+}
+
+.pageList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.pageItem {
+  display: inline-block;
+}
+
+.pageLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  background-color: white;
+  color: #007bff;
+  font-size: 0.875rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+    color: #0056b3;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+  }
+}
+
+.active {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: white;
+
+  &:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+  }
+}
+
+.ellipsis {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: #6c757d;
+  user-select: none;
+}
+
+@media (max-width: 576px) {
+  .pageList {
+    gap: 0.125rem;
+  }
+
+  .pageLink {
+    width: 30px;
+    height: 30px;
+    font-size: 0.75rem;
+  }
+
+  .ellipsis {
+    width: 30px;
+    height: 30px;
+  }
+}

@@ -276,3 +276,6 @@ export const useDesigner = (): DesignerContextValue => {
   }
   return context;
 };
+
+// 为了向后兼容，也导出useDesignerContext
+export const useDesignerContext = useDesigner;

@@ -1,47 +1,90 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { store } from './store';
+import DesignerApp from './DesignerApp';
 
-const startApp = async () => {
-  try {
-    // 动态导入，确保共享模块已加载
-    const { default: DesignerApp } = await import('./DesignerApp');
+// 创建React Query客户端
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 3,
+      staleTime: 5 * 60 * 1000,
+    },
+  },
+});
 
-    const container = document.getElementById('root');
-    if (container) {
-      const root = createRoot(container);
-      root.render(
-        <React.StrictMode>
-          <DesignerApp />
-        </React.StrictMode>
-      );
-      console.log('✅ Designer application started successfully');
-    } else {
-      throw new Error('Root container not found');
-    }
-  } catch (err) {
-    // 🔑 修复：处理 unknown 类型的错误
-    const error = err instanceof Error ? err : new Error(String(err));
-    console.error('❌ Failed to start designer application:', error);
+// qiankun微前端生命周期
+let root: any = null;
 
-    const container = document.getElementById('root');
-    if (container) {
-      container.innerHTML = `
-        <div style="padding: 2rem; text-align: center; color: #ef4444;">
-          <h1>设计器启动失败</h1>
-          <p>错误信息: ${error.message}</p>
-          <p>请检查共享组件库服务是否正常运行</p>
-          <div style="margin-top: 1rem; padding: 1rem; background: #fef2f2; border-radius: 0.5rem; text-align: left;">
-            <h4 style="margin: 0 0 0.5rem;">检查步骤:</h4>
-            <ul style="margin: 0; padding-left: 1.5rem; font-size: 0.875rem;">
-              <li>确认 shared 服务运行: <a href="http://localhost:3001" target="_blank">http://localhost:3001</a></li>
-              <li>确认网络连接正常</li>
-              <li>检查浏览器控制台详细错误</li>
-            </ul>
-          </div>
-        </div>
-      `;
-    }
+export async function bootstrap() {
+  console.log('🚀 Designer应用启动中...');
+}
+
+export async function mount(props: any) {
+  console.log('📦 Designer应用挂载中...', props);
+  
+  const container = document.getElementById('root') || document.getElementById('designer-container');
+  if (container) {
+    root = createRoot(container);
+    root.render(
+      <React.StrictMode>
+        <Provider store={store}>
+          <QueryClientProvider client={queryClient}>
+            <DesignerApp />
+          </QueryClientProvider>
+        </Provider>
+      </React.StrictMode>
+    );
+    console.log('✅ Designer应用挂载成功');
   }
-};
+}
 
-startApp();
+export async function unmount() {
+  console.log('🗑️ Designer应用卸载中...');
+  if (root) {
+    root.unmount();
+    root = null;
+  }
+}
+
+// 独立运行时
+if (!window.__POWERED_BY_QIANKUN__) {
+  const startApp = async () => {
+    try {
+      const container = document.getElementById('root');
+      if (container) {
+        root = createRoot(container);
+        root.render(
+          <React.StrictMode>
+            <Provider store={store}>
+              <QueryClientProvider client={queryClient}>
+                <DesignerApp />
+              </QueryClientProvider>
+            </Provider>
+          </React.StrictMode>
+        );
+        console.log('✅ Designer应用独立启动成功');
+      } else {
+        throw new Error('Root container not found');
+      }
+    } catch (err) {
+      const error = err instanceof Error ? err : new Error(String(err));
+      console.error('❌ Failed to start designer application:', error);
+      
+      const container = document.getElementById('root');
+      if (container) {
+        container.innerHTML = `
+          <div style="padding: 2rem; text-align: center; color: #ef4444;">
+            <h1>设计器启动失败</h1>
+            <p>错误信息: ${error.message}</p>
+            <p>请检查依赖服务是否正常运行</p>
+          </div>
+        `;
+      }
+    }
+  };
+
+  startApp();
+}

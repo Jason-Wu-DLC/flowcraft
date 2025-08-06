@@ -1,45 +1,70 @@
-// packages/shell/src/components/Navigation.tsx
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Home, PenTool, Eye, Users, Settings } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCurrentApp } from '../store';
+import { RootState } from '../store';
+import { Home, PenTool, Eye, Settings } from 'lucide-react';
 import styles from './Navigation.module.scss';
 
-const Navigation: React.FC = () => {
+interface NavigationProps {
+  currentApp?: string;
+  onAppChange?: (appName: string) => void;
+}
+
+const Navigation: React.FC<NavigationProps> = ({ currentApp, onAppChange }) => {
+  const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
+  const globalState = useSelector((state: RootState) => state.global);
+
+  const handleAppChange = (appName: string) => {
+    dispatch(setCurrentApp(appName));
+    onAppChange?.(appName);
+    
+    // 根据应用类型进行路由跳转
+    switch (appName) {
+      case 'designer':
+        navigate('/designer');
+        break;
+      case 'preview':
+        navigate('/preview');
+        break;
+      case 'home':
+      default:
+        navigate('/');
+        break;
+    }
+  };
+
+  const isActive = (appName: string) => {
+    return currentApp === appName || location.pathname.startsWith(`/${appName}`);
+  };
 
   const navItems = [
-    { path: '/', label: '首页', icon: <Home size={18} /> },
-    { path: '/designer', label: '设计器', icon: <PenTool size={18} /> },
-    { path: '/preview', label: '预览', icon: <Eye size={18} /> },
-    { path: '/collaboration', label: '协作', icon: <Users size={18} /> },
+    { app: 'home', label: '首页', icon: <Home size={18} /> },
+    { app: 'designer', label: '设计器', icon: <PenTool size={18} /> },
+    { app: 'preview', label: '预览', icon: <Eye size={18} /> },
   ];
-
-  const isActive = (path: string) => {
-    if (path === '/') {
-      return location.pathname === '/';
-    }
-    return location.pathname.startsWith(path);
-  };
 
   return (
     <div className={styles.navigation}>
       <div className={styles.brand}>
-        <Link to="/" className={styles.brandLink}>
+        <div className={styles.brandLink}>
           <div className={styles.logo}>FC</div>
           <span className={styles.brandText}>FlowCraft</span>
-        </Link>
+        </div>
       </div>
 
       <nav className={styles.nav}>
         {navItems.map((item) => (
-          <Link
-            key={item.path}
-            to={item.path}
-            className={`${styles.navLink} ${isActive(item.path) ? styles.active : ''}`}
+          <button
+            key={item.app}
+            onClick={() => handleAppChange(item.app)}
+            className={`${styles.navLink} ${isActive(item.app) ? styles.active : ''}`}
           >
             {item.icon}
             <span>{item.label}</span>
-          </Link>
+          </button>
         ))}
       </nav>
 

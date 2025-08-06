@@ -9,7 +9,7 @@ module.exports = (env, argv) => {
 
   return {
     mode: argv.mode || 'development',
-    entry: './src/bootstrap.tsx', // 改为 bootstrap 入口点
+    entry: './src/index.tsx', // 改为 index.tsx 入口点
 
     resolve: {
       extensions: ['.tsx', '.ts', '.jsx', '.js'],
@@ -84,6 +84,9 @@ module.exports = (env, argv) => {
         filename: 'remoteEntry.js',
         exposes: {
           './DesignerApp': './src/DesignerApp',
+          './MarketplacePage': './src/pages/MarketplacePage',
+          './MarketplaceDetailsPage': './src/pages/MarketplaceDetailsPage',
+          './VersionManagementPage': './src/pages/VersionManagementPage',
         },
         remotes: {
           // 启用远程模块
@@ -95,12 +98,12 @@ module.exports = (env, argv) => {
           react: {
             singleton: true,
             requiredVersion: packageJson.dependencies.react,
-            eager: false, // 关键：设为 false
+            eager: true, // 关键：改为 true
           },
           'react-dom': {
             singleton: true,
             requiredVersion: packageJson.dependencies['react-dom'],
-            eager: false, // 关键：设为 false
+            eager: true, // 关键：改为 true
           },
           'framer-motion': {
             singleton: true,

@@ -9,7 +9,7 @@ module.exports = (env, argv) => {
 
   return {
     mode: argv.mode || 'development',
-    entry: './src/demo.tsx',
+    entry: './src/bootstrap.tsx',
     target: 'web',
 
     resolve: {
@@ -108,12 +108,12 @@ module.exports = (env, argv) => {
           react: {
             singleton: true,
             requiredVersion: packageJson.peerDependencies.react,
-            eager: false,
+            eager: true, // 关键：改为 true
           },
           'react-dom': {
             singleton: true,
             requiredVersion: packageJson.peerDependencies['react-dom'],
-            eager: false,
+            eager: true, // 关键：改为 true
           },
           'framer-motion': {
             singleton: true,

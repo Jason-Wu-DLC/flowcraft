@@ -1,0 +1,73 @@
+.versionHistoryList {
+  border: 1px solid #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.listHeader {
+  display: grid;
+  grid-template-columns: 100px 150px 1fr;
+  padding: 0.75rem 1rem;
+  background-color: #f8f9fa;
+  font-weight: bold;
+  font-size: 0.875rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.versionColumn {
+  grid-column: 1;
+}
+
+.dateColumn {
+  grid-column: 2;
+}
+
+.changesColumn {
+  grid-column: 3;
+}
+
+.versionItem {
+  display: grid;
+  grid-template-columns: 100px 150px 1fr;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e9ecef;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.versionItem:last-child {
+  border-bottom: none;
+}
+
+.versionItem:hover {
+  background-color: #f8f9fa;
+}
+
+.versionItem.selected {
+  background-color: #e6f7ff;
+  border-left: 3px solid #1890ff;
+}
+
+.versionNumber {
+  grid-column: 1;
+  font-weight: 500;
+}
+
+.releaseDate {
+  grid-column: 2;
+  color: #6c757d;
+  font-size: 0.875rem;
+}
+
+.changeLog {
+  grid-column: 3;
+  color: #212529;
+  font-size: 0.875rem;
+}
+
+.emptyState {
+  padding: 2rem;
+  text-align: center;
+  color: #6c757d;
+  background-color: #f8f9fa;
+}
