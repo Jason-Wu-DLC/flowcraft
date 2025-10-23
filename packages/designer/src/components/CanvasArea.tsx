@@ -81,21 +81,32 @@ const CanvasArea: React.FC = () => {
     fabricCanvasRef.current = canvas;
     setIsReady(true);
 
+    // 添加画布事件监听
+    if (containerRef.current) {
+      containerRef.current.addEventListener('drop', handleDrop as any);
+      containerRef.current.addEventListener('dragover', handleDragOver as any);
+    }
+
     return () => {
+      // 清理事件监听
+      if (containerRef.current) {
+        containerRef.current.removeEventListener('drop', handleDrop as any);
+        containerRef.current.removeEventListener('dragover', handleDragOver as any);
+      }
       canvas.dispose();
     };
   }, [dispatch]);
 
   // 处理拖拽放置事件
-  const handleDrop = (e: React.DragEvent) => {
+  const handleDrop = (e: DragEvent) => {
     e.preventDefault();
-    if (!fabricCanvasRef.current) return;
+    if (!fabricCanvasRef.current || !e.dataTransfer) return;
 
-    const componentId = e.dataTransfer?.getData('text/plain');
+    const componentId = e.dataTransfer.getData('text/plain');
     if (!componentId) return;
 
     // 获取画布上的坐标
-    const pointer = fabricCanvasRef.current.getPointer(e.nativeEvent);
+    const pointer = fabricCanvasRef.current.getPointer(e);
     
     // 根据组件类型创建默认props
     const defaultProps: Record<string, any> = {
@@ -125,7 +136,7 @@ const CanvasArea: React.FC = () => {
   };
 
   // 阻止默认拖拽行为
-  const handleDragOver = (e: React.DragEvent) => {
+  const handleDragOver = (e: DragEvent) => {
     e.preventDefault();
   };
 
@@ -354,8 +365,6 @@ const CanvasArea: React.FC = () => {
     <div 
       ref={containerRef}
       className={styles.canvasArea}
-      onDrop={handleDrop}
-      onDragOver={handleDragOver}
     >
       <canvas ref={canvasRef} className={styles.canvas} />
       {!isReady && (
