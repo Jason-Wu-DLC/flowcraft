@@ -4,6 +4,7 @@ import { registerMicroApps, start, setDefaultMountApp } from 'qiankun';
 import ErrorBoundary from './components/ErrorBoundary';
 import LoadingSpinner from './components/LoadingSpinner';
 import Navigation from './components/Navigation';
+import HomePage from './pages/HomePage';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Provider } from 'react-redux';
 import { store } from './store';
@@ -106,32 +107,6 @@ const App: React.FC = () => {
   );
 };
 
-// 首页组件
-const HomePage: React.FC = () => {
-  return (
-    <div className="home-page">
-      <h1>FlowCraft 智能业务流程构建平台</h1>
-      <p>基于微前端架构的低代码平台</p>
-      <div className="feature-grid">
-        <div className="feature-card">
-          <h3>可视化设计</h3>
-          <p>基于Fabric.js的画布引擎，支持拖拽、嵌套、网格吸附</p>
-        </div>
-        <div className="feature-card">
-          <h3>组件库</h3>
-          <p>20+通用基础组件，支持主题定制与响应式设计</p>
-        </div>
-        <div className="feature-card">
-          <h3>实时预览</h3>
-          <p>Socket.io实现设计器与预览器实时通信</p>
-        </div>
-        <div className="feature-card">
-          <h3>微前端架构</h3>
-          <p>基于qiankun的模块化架构，支持独立部署</p>
-        </div>
-      </div>
-    </div>
-  );
-};
+
 
 export default App;

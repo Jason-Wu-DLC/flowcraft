@@ -2,13 +2,14 @@ import React, { useRef, useEffect, useState } from 'react';
 import { fabric } from 'fabric';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store';
-import { selectNode, selectEdge, updateNode, addNode, addEdge } from '../store';
+import { selectNode, selectEdge, updateNode, addNode } from '../store';
 import styles from './CanvasArea.module.scss';
 
 const CanvasArea: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fabricCanvasRef = useRef<fabric.Canvas | null>(null);
   const [isReady, setIsReady] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const dispatch = useDispatch();
   const { nodes, edges, selectedNodeId, selectedEdgeId } = useSelector(
@@ -85,6 +86,49 @@ const CanvasArea: React.FC = () => {
     };
   }, [dispatch]);
 
+  // 处理拖拽放置事件
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    if (!fabricCanvasRef.current) return;
+
+    const componentId = e.dataTransfer?.getData('text/plain');
+    if (!componentId) return;
+
+    // 获取画布上的坐标
+    const pointer = fabricCanvasRef.current.getPointer(e.nativeEvent);
+    
+    // 根据组件类型创建默认props
+    const defaultProps: Record<string, any> = {
+      button: { label: '按钮', color: '#38bdf8' },
+      input: { placeholder: '请输入...', width: 200 },
+      text: { content: '文本内容', fontSize: 16 },
+      image: { src: '', alt: '图片' },
+      container: { backgroundColor: '#f8f9fa', padding: 16 },
+      row: { columns: 3 },
+      column: { rows: 3 },
+      table: { columns: '列1,列2,列3', rows: 3 },
+      chart: { type: 'bar' },
+      list: { items: ['项目1', '项目2', '项目3'] }
+    };
+
+    // 创建新节点
+    const newNode = {
+      id: `node_${Date.now()}`,
+      type: componentId,
+      x: pointer.x,
+      y: pointer.y,
+      props: defaultProps[componentId] || {}
+    };
+
+    // 添加到Redux store
+    dispatch(addNode(newNode));
+  };
+
+  // 阻止默认拖拽行为
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
+
   // 创建网格背景
   const createGridPattern = (size: number) => {
     const patternCanvas = document.createElement('canvas');
@@ -159,12 +203,61 @@ const CanvasArea: React.FC = () => {
         stroke: '#d1d5db',
         label: '输入框',
       },
+      text: {
+        width: 120,
+        height: 40,
+        fill: '#ffffff',
+        stroke: '#d1d5db',
+        label: '文本',
+      },
+      image: {
+        width: 150,
+        height: 150,
+        fill: '#f0f9ff',
+        stroke: '#bae6fd',
+        label: '图片',
+      },
+      container: {
+        width: 300,
+        height: 200,
+        fill: '#ffffff',
+        stroke: '#d1d5db',
+        label: '容器',
+      },
+      row: {
+        width: 400,
+        height: 100,
+        fill: '#ffffff',
+        stroke: '#d1d5db',
+        label: '行',
+      },
+      column: {
+        width: 200,
+        height: 200,
+        fill: '#ffffff',
+        stroke: '#d1d5db',
+        label: '列',
+      },
       table: {
         width: 300,
         height: 200,
         fill: '#ffffff',
         stroke: '#d1d5db',
         label: '表格',
+      },
+      chart: {
+        width: 300,
+        height: 200,
+        fill: '#ffffff',
+        stroke: '#d1d5db',
+        label: '图表',
+      },
+      list: {
+        width: 250,
+        height: 200,
+        fill: '#ffffff',
+        stroke: '#d1d5db',
+        label: '列表',
       },
     };
     return configs[type] || configs.button;
@@ -258,7 +351,12 @@ const CanvasArea: React.FC = () => {
   };
 
   return (
-    <div className={styles.canvasArea}>
+    <div 
+      ref={containerRef}
+      className={styles.canvasArea}
+      onDrop={handleDrop}
+      onDragOver={handleDragOver}
+    >
       <canvas ref={canvasRef} className={styles.canvas} />
       {!isReady && (
         <div className={styles.loading}>

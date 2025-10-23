@@ -87,7 +87,7 @@ module.exports = (env, argv) => {
     ],
 
     devServer: {
-      port: 3003,
+      port: 3004,
       hot: true,
       historyApiFallback: true,
       headers: {
